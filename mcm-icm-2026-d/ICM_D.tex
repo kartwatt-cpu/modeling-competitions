@@ -1,0 +1,1390 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MCM/ICM LaTeX Template (Stable Full Version)
+%% 2026 MCM/ICM
+%% 功能：Summary + Contents + Team Header + Page x of y
+%% 编译：XeLaTeX -> Biber -> XeLaTeX -> XeLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+
+%============================================================
+% 0) 关键信息（只改这里）
+%============================================================
+\newcommand{\Problem}{D}           % A/B/C/D/E/F
+\newcommand{\TeamNumber}{2622388}  % Team Control Number
+\newcommand{\PaperTitle}{Olympic Multi-dimensional Predictive Integrator}
+
+%============================================================
+% 1) 页面设置
+%============================================================
+\usepackage{geometry}
+\geometry{left=1in,right=0.75in,top=1in,bottom=1in}
+
+%============================================================
+% 2) 字体（Times New Roman 风格：newtx）
+%============================================================
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+%============================================================
+% 3) 数学宏包（只加载一次，避免 openbox 冲突）
+%============================================================
+
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{bbm}
+
+
+% 定理环境（按需使用）
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+
+%============================================================
+% 4) 图表宏包
+%============================================================
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+
+% ===== Notation table packages (MUST) =====
+\usepackage{booktabs}   % \toprule \midrule \bottomrule
+\usepackage{longtable}  % longtable environment
+\usepackage{array}      % >{\centering\arraybackslash} etc.
+\usepackage{caption}    % better caption spacing (optional but fine)
+
+% 图表编号：Figure 1-1 / Table 2-3（按 section 编号）
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\renewcommand{\thefigure}{\arabic{section}-\arabic{figure}}
+\renewcommand{\thetable}{\arabic{section}-\arabic{table}}
+\renewcommand{\figurename}{Figure}
+\renewcommand{\tablename}{Table}
+
+% 图表题注样式
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+
+%============================================================
+% 5) 超链接（隐藏颜色）
+%============================================================
+\usepackage[hidelinks]{hyperref}
+
+%============================================================
+% 6) 目录 Contents 样式（点线+页码右对齐）
+%============================================================
+\usepackage{tocloft}
+\renewcommand{\contentsname}{\hfill Contents \hfill}
+\renewcommand{\cftdotsep}{1}
+\renewcommand{\cftdot}{.}
+\setcounter{tocdepth}{2}
+
+%============================================================
+% 7) 页眉页脚（Team + Page x of y）
+%============================================================
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+% 让 plain 样式（目录、章节首页等）也使用 fancy 页眉页脚
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0pt}
+	\fancyhead[L]{Team \TeamNumber}
+	\fancyhead[R]{Page \thepage\ of \pageref{LastPage}}
+}
+\usepackage{indentfirst}      % 章节后的第一段也缩进
+\setlength{\parindent}{2em}   % 全文首行缩进两格
+\setlength{\parskip}{0pt}     % 段间不额外加空白（更紧凑）
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{Team \TeamNumber}
+\fancyhead[R]{Page \thepage\ of \pageref{LastPage}}
+
+%============================================================
+% 8) 标题间距（更像 MCM 论文）
+%============================================================
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1.0ex}{0.6ex}
+\titlespacing*{\subsection}{0pt}{0.8ex}{0.4ex}
+\titlespacing*{\subsubsection}{0pt}{0.6ex}{0.3ex}
+
+%============================================================
+% 9) 参考文献（biblatex + biber，GB7714）
+%    若你不需要国标，后续我也能给你 APA/IEEE 版
+%============================================================
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{references.bib}
+\renewcommand{\refname}{} % 不显示 "References" 标题（你也可以删掉这行）
+
+%============================================================
+% 10) 常用宏
+%============================================================
+\newcommand{\TODO}[1]{\textbf{[TODO: #1]}}
+
+%============================================================
+% 11) 标题信息（可选：你也可以完全不用 \maketitle）
+%============================================================
+\title{\vspace{-1.2em}\Large\bfseries \PaperTitle}
+\author{}
+\date{}
+
+%============================================================
+% 正文开始
+%============================================================
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% A) Summary Sheet（第一页，通常不带页眉）
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\thispagestyle{empty}
+	
+	% Summary 顶部三栏信息（稳定写法：center + tabular）
+	\begin{center}
+		\begin{tabular}{ccc}
+			\parbox[t]{0.30\linewidth}{\centering\textbf{Problem Chosen}\\[0.3em]\Large\textcolor{red}{\Problem}}
+			&
+			\parbox[t]{0.30\linewidth}{\centering\textbf{2026}\\ \textbf{MCM/ICM}\\ \textbf{Summary Sheet}}
+			&
+			\parbox[t]{0.30\linewidth}{\centering\textbf{Team Control Number}\\[0.3em]\Large\textcolor{red}{\TeamNumber}}\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\vspace{1.0em}
+	\begin{center}
+		{\Large\bfseries Summary}\\[0.4em]
+	\end{center}
+	
+	% 这里写 Summary 内容（示例占位）
+
+	% 你可以直接替换成你的摘要段落
+	% ====== Replace the placeholder text in Summary Sheet with the following ======
+	% ===================== Summary Sheet (replace your current Summary text block) =====================
+	% Recommended in preamble (once): \usepackage{setspace}
+	% If you do NOT want to add packages, comment \setstretch and use:
+	% \linespread{1.08}\selectfont  (inside the group) instead.
+	
+	
+
+	In the \textbf{WNBA expansion} and \textbf{media-growth} cycle, franchise owners face a coupled objective: sustain competitive success while protecting long-run enterprise value. This paper develops an \textbf{executable decision-support pipeline} for the Las Vegas Aces that integrates \textbf{dynamic financial control}, \textbf{roster portfolio optimization}, \textbf{expansion-draft risk management}, and two game-level modules (\textbf{pricing} and \textbf{injury response}). The framework is \textbf{auditable} (explicit states, decisions, constraints), \textbf{scenario-ready} (stress testing), and \textbf{implementable} (outputs map to managerial actions).
+	
+
+	Problem 1 models the franchise as a \textbf{continuous-time optimal-control} system. Managerial levers---payroll intensity, ticket pricing level, financing aggressiveness---drive the evolution of performance, fan equity, liquidity, and debt. The solution outputs valuation and cash-flow trajectories plus policy landscapes. \textbf{3D valuation maps} and \textbf{sensitivity heatmaps} isolate robust operating zones and leverage-fragile regions, supporting ROI-aware capital allocation and risk budgeting.
+	
+
+	Problem 2 formulates player acquisition as a \textbf{portfolio-style MILP}. Candidates receive blended utility scores reflecting competitive impact and commercial contribution, discounted by availability risk and adjusted for acquisition/stability frictions. The optimizer returns a rotation-feasible \textbf{10-player roster} with starter--bench coverage, plus a utility decomposition for transparent trade-offs.
+	
+
+	Problem 3 addresses expansion uncertainty with a \textbf{minimax-regret} protection rule under the six-player constraint. The protected list minimizes worst-case lost net value under uncertain selections. A \textbf{market-attractiveness} component quantifies how expansion locations shift demand and talent dilution, updating owner-facing exposure and \textbf{brand value} risk.
+	
+
+	Problems 4--5 provide last-mile execution modules. \textbf{Dynamic ticket pricing} combines an \textbf{XGBoost} demand forecaster with a \textbf{Revenue+CLV} objective, supported by \textbf{SHAP} interpretability. \textbf{Injury resilience} applies a trigger-based \textbf{B-plan} that coordinates roster reinforcement and financial contraction when thresholds are exceeded, reducing valuation drawdown and cash-flow volatility in stress tests.
+	
+
+	Overall, the pipeline converts the win--profit tension into \textbf{operational rules}: where to operate in policy space, how to construct a stable roster, how to hedge expansion risk, when to activate contingency actions. Outputs are packaged as compact dashboards and sensitivity-anchored robustness checks for owner execution.
+
+	
+	\vspace{0.55em} % leave one clear blank line before keywords (as in the sample)
+	
+	\noindent\textbf{Keywords:} WNBA Expansion; Continuous-Time Optimal Control; Mixed-Integer Roster Optimization; Minimax Regret; XGBoost Demand Forecasting; Trigger-Based Injury Policy; Sensitivity Analysis.
+
+	% ===================== End Summary Sheet =====================
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% B) Contents（目录页）
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\pagestyle{fancy}
+	\tableofcontents
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% C) 正文（从这里开始启用页眉页脚）
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	
+	\section{Introduction}
+	\subsection{Problem Background}
+	Professional sports franchises are entertainment businesses as much as competitive teams. 
+	Winning can lift visibility, but revenues from media rights, sponsorships, ticketing, and long-run franchise value often respond with lags and clear nonlinearities. 
+	As a result, owners face a constant tension: chase on-court success, or protect the bottom line—usually while trying to do both.
+	
+	This challenge is especially sharp in the WNBA’s current expansion and media-growth window, where higher demand creates upside but also raises the cost of mistakes. 
+	Teams must operate under league constraints (such as salary caps, contracts and so forth) while managing real risks: injuries, performance volatility and financing conditions. Player value is also multi-dimensional—some athletes move wins, others move markets, and the two do not always align.
+	
+	These realities motivate a system-level framework that links roster decisions, financial levers, and business tactics over time, supporting both competitive planning and sustained financial health.
+	
+	
+	\begin{figure}[!htbp]
+		\centering
+		\includegraphics[width=0.7\textwidth]{figures/Problem_Background.png}
+		\caption{Problem Background}
+		\label{fig:model_structure}
+	\end{figure}
+
+	
+	% 写你的背景
+	
+	\subsection{Restatement of the Problem}
+	The task is to develop an integrated quantitative framework for professional team management that jointly improves on-court competitiveness and long-run financial value under league constraints and uncertainty (e.g., rule changes, expansion shocks, and player availability). Specifically:
+	\begin{enumerate}[itemsep=0.55em]
+		\item \textbf{Dynamic Control}: Formulate a dynamic control model to update investment, pricing, and leverage policies as team states evolve, and output valuation trajectories for scenario comparison.
+		
+		\item \textbf{Roster MILP}: Build a cap-compliant player acquisition optimizer (draft/trade/free agency) that evaluates player value on competitive and business dimensions and reports strengths/weaknesses via interpretable components.
+		
+		\item \textbf{Expansion Shock}: Quantify how league rules and expansion events (e.g., salary cap, schedule, revenue sharing, protection rules) propagate to team profitability, and assess location-driven market effects using the model.
+		
+		\item \textbf{Ticket Pricing}: Solve the selected business lever---dynamic ticket pricing---by optimizing discrete price tiers to maximize a Revenue$+$CLV objective aligned with owner goals.
+		
+		\item \textbf{Injury Resilience}: Design and evaluate an injury-response policy (triggered B-plan) that mitigates performance and cash-flow drawdowns when a key player is unavailable.
+	\end{enumerate}
+	
+	
+
+	% 写你的重述
+	
+	\subsection{Our Work}
+	To address Problems~1--5, this paper builds a five-module, auditable decision pipeline for a WNBA franchise in an expansion-cycle setting.
+	Model~I simulates performance, fan equity, liquidity, and leverage under controls $(f(t),p(t),u(t))$, outputting valuation trajectories and policy surfaces.
+	Model~II solves a cap-compliant MILP to output a rotation-feasible 10-player roster (5+5) with utility decomposition in $(\alpha,\lambda)$.
+	A minimax-regret protection module selects a robust six-player protected set across competitive/commercial/budget scenarios.
+	Dynamic pricing pairs an XGBoost demand forecaster with a Revenue$+$CLV objective to assign game-level tiers (E/N/P) and retention, while an injury module triggers a minimax-regret-calibrated B-plan and validates drawdown mitigation via policy maps and trajectory diagnostics.
+	
+	\begin{figure}[!htbp]
+		\centering
+		\includegraphics[width=0.7\textwidth]{figures/Ourwork.png}
+		\caption{Our work in modeling}
+		\label{fig:ourwork}
+	\end{figure}
+
+	\begin{figure}[!htbp]
+		\centering
+		\includegraphics[width=0.8\textwidth]{figures/ourwork2FCF.png}
+		\caption{The FCF valuation method}
+		\label{fig:ourwork2FCF}
+	\end{figure}
+	
+	
+	% 写你的工作与贡献
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% 2 Assumptions and Justifications
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Assumptions and Justifications}
+	
+	\begin{itemize}
+		\item \textbf{Assumption 1:} \emph{Team performance increases with salary spending until the league salary cap binds.}\\
+		\textbf{Justification:} With a binding cap, payroll becomes an actionable control lever: spending purchases talent and raises expected win strength.
+		
+		\item \textbf{Assumption 2:} \emph{Ticket demand is price-elastic and increases with team popularity.}\\
+		\textbf{Justification:} An elastic demand function maps price and popularity into attendance, making the revenue--engagement trade-off explicit.
+		
+		\item \textbf{Assumption 3:} \emph{Franchise valuation follows a revenue multiple, adjusted for popularity and net of debt.}\\
+		\textbf{Justification:} This aligns with common franchise appraisal practice and interprets debt as a senior claim on cash flows.
+		
+		\item \textbf{Assumption 4:} \emph{Management can adjust payroll, ticket tiers, and leverage during the season.}\\
+		\textbf{Justification:} This assumption supports a dynamic control setting and enables timely responses to performance and financial volatility.
+		
+		\item \textbf{Assumption 5:} \emph{Random injury shocks can temporarily reduce team performance and ticket sales.}\\
+		\textbf{Justification:} Modeling injury shocks preserves real-world uncertainty and strengthens the credibility of scenario-based decisions.
+	\end{itemize}
+	
+	
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 3 Notations (跨页版本：充分利用空白)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Key Notations}
+\label{sec:notations}
+
+\setlength{\LTpre}{0.2em}
+\setlength{\LTpost}{0.2em}
+
+\begin{small}
+	\setlength{\tabcolsep}{10pt}
+	\renewcommand{\arraystretch}{1.10}
+	
+	\begin{longtable}{>{\centering\arraybackslash}p{0.22\textwidth} >{\raggedright\arraybackslash}p{0.70\textwidth}}
+		\toprule
+		\textbf{Symbol} & \textbf{Definition} \\
+		\midrule
+		\endfirsthead
+		
+		\toprule
+		\textbf{Symbol} & \textbf{Definition} \\
+		\midrule
+		\endhead
+		
+		\midrule
+		\multicolumn{2}{r}{\small Continued on next page} \\
+		\endfoot
+		
+		\bottomrule
+		\caption{Key notations used throughout the framework.}
+		\label{tab:notation_key}\\
+		\endlastfoot
+		
+		$t\in[0,T]$ & Continuous time and horizon length.\\
+		$W(t)$ & Competitiveness / performance state.\\
+		$P(t)$ & Fan equity (popularity) state.\\
+		$C(t)$ & Cash (operating liquidity) state.\\
+		$D(t)$ & Debt (leverage) state.\\
+		$f(t)$ & Payroll intensity control.\\
+		$p(t)$ & Ticket-price multiplier control.\\
+		$u(t)$ & Leverage/financing control.\\
+		$\mathrm{Cap}$ & League salary cap (payroll upper bound).\\
+		$R(t)$ & Operating revenue (function of $P(t)$ and $p(t)$).\\
+		$r$ & Discount rate.\\
+		$V(t)$ & Franchise valuation proxy (DCF-consistent).\\
+		$i$ & Player index.\\
+		$\alpha$ & Competitive vs.\ commercial weight in utility.\\
+		$\lambda$ & Risk discount coefficient for availability/injury risk.\\
+		$U_i$ & Mixed utility of player $i$.\\
+		$U_i^{\mathrm{eff}}$ & Risk-adjusted utility of player $i$.\\
+		$S_i$ & Net score used by the roster optimizer.\\
+		$x_i^{S},\,x_i^{B}$ & Binary selection (starter / bench).\\
+		$\mathcal{P}$ & Protected-player set (size constraint).\\
+		$\mathrm{Regret}$ & Worst-case loss under expansion uncertainty (minimax objective).\\
+		$g$ & Game index.\\
+		$p_g$ & Ticket price decision for game $g$ (tiered if needed).\\
+		$\widehat{\mathrm{Demand}}_g$ & Predicted demand/attendance for game $g$.\\
+		$\Delta \mathrm{CLV}_g$ & Incremental customer lifetime value from pricing in game $g$.\\
+		$\varepsilon$ & Ticket-price elasticity in the demand function.\\
+		$p_{\mathrm{inj}}$ & Injury probability used in stress tests.\\
+		$\text{sev}^*,\,\text{risk}^*$ & Trigger thresholds for injury contingency (B-plan).\\
+		
+	\end{longtable}
+\end{small}
+
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% 4 Model I
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Franchise Value Control Engine: Dynamic Decision Model}
+	
+	\subsection{Objective Framing and Business Landscape}
+	
+	The Las Vegas Aces operate at an inflection point shaped by WNBA expansion, shifting media economics, and higher player mobility.
+	The managerial task is to allocate resources dynamically to sustain on-court strength while improving long-run franchise value.
+	This study therefore formulates a continuous-time control model with three actionable levers---salary investment $f(t)$, ticket pricing $p(t)$, and leverage usage $u(t)$---and maximizes the discounted present value of operating profits over the planning horizon.
+	
+	Figure~\ref{fig:model_rationale} motivates the dynamic formulation through three mechanisms.
+	\emph{(i) High revenue volatility and market sensitivity}: ticket and media revenues respond nonlinearly to performance and star presence, so $f(t)$ can generate state-dependent returns via popularity.
+	\emph{(ii) Tension between short-term cash flow and long-term valuation}: aggressive spending may lift valuation but compress liquidity, making the cash--value trade-off a first-order constraint.
+	\emph{(iii) Need for dynamic policy responsiveness}: static budgets cannot track rapid shifts in performance and market conditions, whereas feedback controls adjust $(f(t),p(t),u(t))$ in real time.
+	
+	\begin{figure}[!htbp]
+		\centering
+		\includegraphics[width=0.7\textwidth]{figures/figure4.1.png}
+		\caption{Motivation for adopting a dynamic decision model.}
+		\label{fig:model_rationale}
+	\end{figure}
+
+	In conclusion, the model links these business drivers to an auditable policy design that can be simulated and stress-tested.
+	
+	
+	\subsection{Model Design: Continuous-Time Optimal Control and Goal}
+	
+	To represent season operations as a state-dependent management problem, this study formulates a continuous-time optimal control model on a finite horizon $[0,T]$. 
+	Policy choices are updated continuously as the team state evolves, reflecting changes in on-court performance, fan engagement, and financial conditions.
+	
+	Three control variables are used: salary investment intensity $f(t)$, ticket price multiplier $p(t)$, and debt financing ratio $u(t)$. 
+	These levers jointly govern four state variables---win strength $W(t)$, popularity stock $P(t)$, cash balance $C(t)$, and outstanding debt $D(t)$---which summarize the operating and financial status of the franchise.
+	
+	Figure~\ref{fig:process_flow} aligns the model components with the solution pipeline: control inputs $(f(t),p(t),u(t))$ feed the state dynamics (Eqs.~\eqref{eq:win}--\eqref{eq:debt}), the resulting states determine the revenue--cost mapping (Eq.~\eqref{eq:revenue}), and the objective aggregates discounted operating profit over $[0,T]$ (Eq.~\eqref{eq:objective}). 
+
+	\begin{figure}[!htbp]
+		\centering
+		\includegraphics[width=0.5\textwidth]{figures/figure4.2.png}
+		\caption{Process flow of the dynamic decision model.}
+		\label{fig:process_flow}
+	\end{figure}
+
+
+	The state dynamics are specified by the following ordinary differential equations:
+	\begin{align}
+		\frac{dW(t)}{dt} &= \alpha_f\, f(t)\bigl(1-W(t)\bigr)\;-\;\delta_w\, W(t), \label{eq:win}\\[0.3em]
+		\frac{dP(t)}{dt} &= \alpha_w\, W(t)\;-\;\gamma_p\, P(t)\;-\;\eta_p\bigl(p(t)-1\bigr), \label{eq:pop}\\[0.3em]
+		\frac{dC(t)}{dt} &= R\!\bigl(P(t),p(t)\bigr)\;-\;f(t)\,\mathrm{Cap}\;-\;\mathrm{Cost}_0\;+\;u(t)\,f(t)\,\mathrm{Cap}, \label{eq:cash}\\[0.3em]
+		\frac{dD(t)}{dt} &= u(t)\,f(t)\,\mathrm{Cap}. \label{eq:debt}
+	\end{align}
+	
+	Equation~\eqref{eq:win} encodes diminishing returns of payroll investment on win strength, while Eq.~\eqref{eq:pop} links popularity growth to winning and penalizes price increases through demand sensitivity. 
+	Equations~\eqref{eq:cash}--\eqref{eq:debt} account for operating cash flow and debt accumulation given the chosen leverage rule. 
+	Revenue is modeled as a function of engagement and pricing:
+	\begin{equation}
+		R\!\bigl(P(t),p(t)\bigr) = \kappa\,P(t)\,p(t), \label{eq:revenue}
+	\end{equation}
+	where $\kappa$ denotes baseline monetization efficiency.
+	\vspace{-0.5em}
+	The goal is to maximize discounted cumulative operating profit:
+	\begin{equation}
+		\max_{f(t),\,p(t),\,u(t)} \;\int_{0}^{T} e^{-rt}\,\Bigl[R\!\bigl(P(t),p(t)\bigr)\;-\;f(t)\,\mathrm{Cap}\;-\;\mathrm{Cost}_0\Bigr]\,dt,
+		\label{eq:objective}
+	\end{equation}
+	subject to Eqs.~\eqref{eq:win}--\eqref{eq:debt}, the salary-cap policy, and standard feasibility constraints (e.g., non-negativity of the state variables).
+	
+	
+	
+	\subsection{Data Integration and Scenario Simulation}
+	
+	To operationalize this continuous‑time control model, we develop a data‑informed simulation framework tailored to the Las Vegas Aces. Key business variables—salary caps, price elasticity, fan value multipliers, media revenues, debt costs, and brand equity coefficients—are extracted from public records and financial reports. These variables calibrate parameter values such as salary bounds, pricing sensitivity, baseline revenue, and cost structure.
+	
+	The model is discretized at $\Delta t=0.2$ years and solved via forward Euler integration. We adjust control variables $f(t)$, $p(t)$, and $u(t)$ iteratively to study their influence on competitiveness index $W(t)$, popularity $P(t)$, cash $C(t)$, debt $D(t)$, and valuation $V(t)$.
+	 Two canonical strategies are examined:
+	
+	\begin{itemize}
+		\item \textbf{Aggressive Strategy:} high payroll, premium ticket pricing, active use of leverage.
+		\vspace{-0.5em}
+		\item \textbf{Conservative Strategy:} lean payroll, moderate pricing, no leverage.
+	\end{itemize}
+
+	\vspace{-1em}	
+	Each scenario is simulated over a three-year horizon with numerical step size $\Delta t=0.2$ years
+	(and aggregated to quarterly summaries when reporting). To remain consistent with the One-Source-of-Truth valuation
+	definition, the franchise value is computed by a DCF of operating free cash flow (excluding interest expense)
+	plus a terminal EV/Revenue multiple:
+	\begin{equation}
+		\label{eq:valuation_dcf}
+		V(t)=\int_{t}^{T} e^{-r(s-t)}\Big(\mathrm{FCF}(s)-\kappa D(s)^2\Big)\,ds \;+\; e^{-r(T-t)}\,m\,R(T),
+	\end{equation}
+	
+	where $\mathrm{FCF}(t)=R\!\bigl(P(t),p(t)\bigr)-f(t)\,\mathrm{Cap}-\mathrm{Cost}_0$, $r$ is the discount rate,
+	$m$ is the terminal EV/Revenue multiple, and $\kappa>0$ penalizes leverage-driven downside risk.
+	Figure~\ref{fig:dyn_model} summarizes the transmission mechanism from policy levers to state trajectories and valuation.
+
+	We additionally run a grid simulation across salary ratios and pricing multipliers for multiple debt scenarios. The resulting valuation surfaces map the control space to long‑term franchise value, offering visual insight into how aggressive investments and pricing policies shape outcomes under bounded risk.
+	
+	\begin{figure}[!htbp]
+		\centering
+		\includegraphics[width=0.7\textwidth]{figures/DynamicDecisonModel.jpg}
+		\caption{Dynamic decision model overview}
+		\label{fig:dyn_model}
+	\end{figure}
+	
+	\subsection{Visualization and Decision Insights}
+	
+	Simulations quantify how the three managerial levers---salary ratio $f(t)$, ticket multiplier $p(t)$, and leverage policy $u(t)$---shape terminal franchise value. 
+	Holding other parameters fixed, the analysis visualizes (i) the valuation landscape over $(f,p)$ at representative debt ratios, (ii) multi-indicator trajectories under distinct policy regimes, and (iii) local sensitivity patterns that flag fragile operating points.
+	
+	
+	\subsubsection*{3D Valuation Surfaces}
+	Figure~\ref{fig:valuation_three} reports $V(T)$ on a grid of $(f,p)$ under low, moderate, and high leverage. 
+	Across the three panels, the value-maximizing region concentrates around moderate payroll and pricing, whereas overly aggressive $f$ or high $p$ erodes long-run value (win-rate saturation and demand contraction). 
+	As $u$ increases, the high-value basin tightens, indicating stronger sensitivity to control mis-specification.
+	
+	\begin{figure}[!htbp]
+		\centering
+		\begin{subfigure}{0.32\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/synthetic_valuation_surface1_u0.2.png}
+			\caption{$u=0.2$ (low debt)}
+			\label{fig:val_u02}
+		\end{subfigure}\hfill
+		\begin{subfigure}{0.32\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/synthetic_valuation_surface1_u0.6.png}
+			\caption{$u=0.6$ (moderate debt)}
+			\label{fig:val_u06}
+		\end{subfigure}\hfill
+		\begin{subfigure}{0.32\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/synthetic_valuation_surface1_u1.0.png}
+			\caption{$u=1.0$ (high debt)}
+			\label{fig:val_u10}
+		\end{subfigure}
+		\caption{3D valuation surfaces under varying salary and pricing decisions at three debt ratios.}
+		\label{fig:valuation_three}
+	\end{figure}
+	
+	\subsubsection*{Policy Comparison}
+	Figure~\ref{fig:policy_compare} contrasts representative policy regimes by tracking state indicators and valuation over time. 
+	Aggressive growth policies achieve higher peaks but exhibit larger drawdowns and volatility, while more conservative regimes trade upside for smoother trajectories and reduced downside exposure.
+	\begin{figure}[!htbp]
+		\centering
+		\includegraphics[width=0.8\textwidth]{figures/StrategiesComparsion.png}
+		\caption{Comparison of key state and value trajectories under three policy regimes.}
+		\label{fig:policy_compare}
+	\end{figure}
+	
+	
+	\subsubsection*{Sensitivity Heatmaps}
+	
+	Figure~\ref{fig:sens_heatmap} visualizes local sensitivity of valuation to $(f,p)$ under multiple leverage settings. 
+	High-sensitivity cells mark regions where small changes in payroll or pricing induce disproportionate shifts in $V(T)$, providing an operational ``no-go'' map for policy tuning.
+	\begin{figure}[!htbp]
+		\centering
+		\includegraphics[width=0.8\textwidth]{figures/sensitivity_heatmaps.png}
+		\caption{Local sensitivity heatmaps of valuation $S_{\text{total}}(f,p)$ under different debt policies.}
+		\label{fig:sens_heatmap}
+	\end{figure}
+	
+	
+	\subsubsection*{Decision Implications}
+	\begin{enumerate}
+		\item \textbf{Leverage amplifies payoff curvature.} Higher $u$ can raise peak valuation but compresses the feasible high-value zone, increasing downside from mis-tuned controls.
+		\item \textbf{Pricing is nonlinear with a saturation zone.} At large multipliers (near the upper range in Fig.~\ref{fig:sens_heatmap}), marginal value gains weaken as attendance constraints bind.
+		\item \textbf{Moderate payroll is the most robust anchor.} A mid-to-high $f$ band remains competitive across debt settings, reducing sensitivity to pricing noise.
+	\end{enumerate}
+	
+	In summary, these figures translate model outputs into actionable guardrails for adjusting salary, pricing, and leverage as market and performance signals evolve.
+	
+	
+	\subsection{Strategic Recommendation and Risk Evaluation}
+	Section~4 converts Model~I outputs into auditable decision rules. 
+	Under expansion-cycle volatility (Fig.~\ref{fig:model_rationale}), the control pipeline (Fig.~\ref{fig:process_flow}) maps $(f(t),p(t),u(t))$ through state dynamics into the discounted-profit objective; the resulting policy evidence is read from valuation basins (Fig.~\ref{fig:valuation_three}), trajectory drawdowns (Fig.~\ref{fig:policy_compare}), and local sensitivity ``no-go'' regions (Fig.~\ref{fig:sens_heatmap}).
+	
+	\paragraph{Regime-based recommendation.}
+	Leverage raises upside but tightens the robust basin in $(f,p)$, increasing downside from mis-tuned controls.
+	\begin{itemize}
+		\item \textbf{Low leverage ($u=0.2$):} The landscape is smooth (Fig.~\ref{fig:valuation_three}). 
+		Use this regime to protect liquidity and fan equity; keep payroll commitments and pricing moves conservative.
+		\item \textbf{Moderate leverage ($u=0.6$):} A stable interior high-value zone emerges with manageable drawdowns (Figs.~\ref{fig:valuation_three}--\ref{fig:policy_compare}). 
+		Treat this regime as the baseline and avoid boundary solutions where sensitivity spikes.
+		\item \textbf{High leverage ($u=1.0$):} The feasible high-value region narrows and sensitivity rises (Fig.~\ref{fig:sens_heatmap}). 
+		Use it only as a time-limited overlay for high-upside windows, with explicit guardrails on $(f,p)$ and a planned exit back to baseline.
+	\end{itemize}
+	
+	\paragraph{Risk evaluation (implementation checklist).}
+	Select $(f,p)$ from the interior basin (Fig.~\ref{fig:valuation_three}), screen adjustments using the sensitivity heatmaps as a ``no-go'' map (Fig.~\ref{fig:sens_heatmap}), and validate drawdown exposure via trajectory diagnostics (Fig.~\ref{fig:policy_compare}). 
+	
+	\noindent\textbf{Integrated Recommendation.} Operate primarily in low-to-moderate leverage, tune $(f,p)$ within robust regions, and reserve high leverage for short, performance-supported windows with strict guardrails and an exit plan.
+	
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% 5 Model II
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Roster Portfolio Optimizer: Player Acquisition Portfolio Optimization}
+	
+	% ===============================
+	% 5.1 Objective Framing and Decision Scope
+	% ===============================
+	\subsection{Objective Framing and Decision Scope}
+	
+
+	
+	Problem 2 formulates next-season player acquisition for the \textit{Las Vegas Aces} as a constrained portfolio selection problem. As summarized in Fig.~\ref{fig:wrap_model}, the system ingests candidate data, constructs standardized return and risk features, and solves a roster-level optimization that trades off on-court performance against commercial value while maintaining role coverage and managerial stability.
+	
+
+	
+	\paragraph{Decision output.}
+	The optimizer outputs a 10-player roster (5 starters + 5 bench). Both units follow a fixed position mix ($2G$-$2F$-$1C$), and a one-to-one coverage rule maps each starter role to a bench substitute, making the recommendation rotation-feasible under typical in-season shocks.
+	
+	\begin{wrapfigure}{r}{0.38\textwidth}
+		\vspace{-1.5em}
+		\centering
+		\includegraphics[width=\linewidth]{figures/PROBLEM2.png}
+		\caption{Decision-system pipeline}
+		\label{fig:wrap_model}
+		\vspace{-2em}
+	\end{wrapfigure}
+	
+	\paragraph{Mixed objective (player utility).}
+	Each candidate $i$ receives a normalized competitive score $\widehat{P}_i$ and commercial score $\widehat{B}_i$. With preference weight $\alpha\in[0,1]$, the base utility is
+	\begin{equation}\label{eq:p2_mixed_utility}
+		U_i=\alpha \widehat{P}_i+(1-\alpha)\widehat{B}_i .
+	\end{equation}
+	Implementation realism is enforced downstream by applying injury-risk adjustments and acquisition frictions (e.g., signing/trade fees), which penalize fragile or high-turnover choices.
+	
+	\paragraph{Feasibility and stability.}
+	Even though the salary cap is not binding in the final solution, the model explicitly validates institutional feasibility (eligibility, roster size, position coverage) and stability preferences (limited disruption). The resulting roster is therefore high-utility under the mixed objective while remaining operationally implementable.
+	
+	
+	% ===============================
+	% 5.2 Model Construction (insert figure at end of Competitive Return part)
+	% ===============================
+	\subsection{Model Construction: Utility, Risk, and Acquisition Frictions}\label{subsec:p2_model}
+	
+	Model II formulates player acquisition as a constrained portfolio selection problem. Each candidate $i$ contributes (i) competitive upside and (ii) commercial upside, while feasibility is enforced through (iii) availability risk and (iv) acquisition/stability frictions. These components are mapped into a single net score $S_i$, which serves as the input to the MILP in Section~\ref{subsec:p2_solution}.
+	
+	\subsubsection{Competitive Return: Performance Efficiency}\label{subsubsec:p2_competitive}
+	A performance-efficiency proxy $P_i$ is constructed from box-score production and minutes played (aggregated over an evaluation window) and normalized to a comparable scale:
+	\begin{equation}\label{eq:p2_perf_norm}
+		\widehat{P}_i=\frac{P_i-\min_j P_j}{\max_j P_j-\min_j P_j+\varepsilon_0}.
+	\end{equation}
+	
+	\paragraph{Cost-aware scouting diagnostic.}
+	Even if the salary cap is slack in the final solution, salary remains the effective price of talent and constrains implementability. Fig.~\ref{fig:p2_perf_salary} plots efficiency against salary and partitions candidates into interpretable regions (e.g., ``value gems'' vs.\ ``overpaid risk'', with role markers). This return--cost landscape validates the need to embed transaction fees and stability penalties in the scoring layer, rather than relying on utility alone.
+	
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.62\linewidth]{figures/Scoutingstrategy.jpg}
+		\caption{Return--cost landscape for scouting (performance efficiency vs.\ salary).}
+		\label{fig:p2_perf_salary}
+	\end{figure}
+
+	\subsubsection{Commercial Return and Mixed Utility}\label{subsubsec:p2_commercial}
+	Off-court value is captured by a transparent popularity/ticket-lift proxy $B_i$ from the merged dataset, normalized to $\widehat{B}_i\in[0,1]$. A preference weight $\alpha\in[0,1]$ defines mixed utility:
+	\begin{equation}
+		U_i=\alpha\widehat{P}_i+(1-\alpha)\widehat{B}_i .
+	\end{equation}
+	Larger $\alpha$ prioritizes win-now performance; smaller $\alpha$ shifts weight toward commercial growth.
+	
+	\subsubsection{Risk Discount and Net Score}\label{subsubsec:p2_net}
+	Let $p_i$ denote injury/unavailability probability and $\lambda\ge 0$ the risk-aversion coefficient. Availability-adjusted utility is
+	\begin{equation}\label{eq:p2_risk_discount}
+		U_i^{\mathrm{eff}}=(1-\lambda p_i)\,U_i .
+	\end{equation}
+	Implementation frictions are then subtracted: $\mathrm{Fee}_i$ is a signing/trade friction cost (observed or proxied), and $\mathbbm{1}(\mathrm{new}_i)$ flags non-incumbents. The optimizer score is
+	\begin{equation}\label{eq:p2_net_score}
+		S_i=U_i^{\mathrm{eff}}-\phi\,\mathrm{Fee}_i-\eta_{\mathrm{stab}}\,\mathbbm{1}(\mathrm{new}_i),
+	\end{equation}
+	where $\phi$ and $\eta_{\mathrm{stab}}$ tune sensitivity to transaction cost and roster disruption. Section~\ref{subsec:p2_solution} solves for starters and bench players (fixed position ratio with one-to-one coverage) by maximizing the portfolio objective implied by $\sum_i S_i$.
+	
+	
+	
+	% ===============================
+	% 5.3 Model Solving: Mixed-Integer Optimization and Implementation
+	% ===============================
+	\subsection{Solution Method: Mixed-Integer Roster Optimization}\label{subsec:p2_solution}
+	
+	Given the net score $S_i$ from Section~\ref{subsec:p2_model}, Model II \emph{solves} an implementable roster decision under two operational rules: (i) a fixed position ratio and (ii) one-to-one starter--bench coverage. This is formulated as a mixed-integer linear program (MILP) that selects 5 starters and 5 bench players from the eligible signing pool.
+	
+	\subsubsection{Decision variables.}
+	Let $\mathcal{I}$ denote eligible candidates. For each $i\in\mathcal{I}$,
+	\begin{equation}\label{eq:p2_vars_key}
+		x_i^{S}\in\{0,1\},\qquad x_i^{B}\in\{0,1\},
+	\end{equation}
+	where $x_i^{S}=1$ (starter) and $x_i^{B}=1$ (bench). Double selection is prevented by $x_i^{S}+x_i^{B}\le 1$, and $y_i=x_i^{S}+x_i^{B}$ indicates roster membership.
+	
+	\subsubsection{Objective.}
+	The MILP \emph{maximizes} total portfolio value implied by $S_i$:
+	\begin{equation}\label{eq:p2_obj_key}
+		\max \;\; \sum_{i\in\mathcal{I}} \big(x_i^{S}+x_i^{B}\big)\,S_i .
+	\end{equation}
+	Since $S_i$ already aggregates competitive value, commercial value, risk discount, and acquisition/stability frictions, Eq.~\eqref{eq:p2_obj_key} directly represents net-return maximization under implementability.
+	
+	\subsubsection{Roster feasibility and fixed position ratio.}
+	Roster size is enforced by
+	\[
+	\sum_{i\in\mathcal{I}} x_i^{S}=5,\qquad \sum_{i\in\mathcal{I}} x_i^{B}=5.
+	\]
+	Let $\mathcal{I}_p$ be candidates at position $p\in\{G,F,C\}$. A fixed mix $(n_G,n_F,n_C)$ is imposed for both units:
+	\begin{equation}\label{eq:p2_pos_ratio_key}
+		\sum_{i\in\mathcal{I}_p} x_i^{S}=n_p,\qquad
+		\sum_{i\in\mathcal{I}_p} x_i^{B}=n_p,\qquad
+		p\in\{G,F,C\},
+	\end{equation}
+	with $n_G+n_F+n_C=5$. This construction \emph{validates} positional balance and enforces one-to-one coverage by design.
+	
+	\subsubsection{Policy levers and interpretability outputs.}
+	
+
+	\noindent \textbf{Candidate ranking (sanity check).}
+	Before optimization, candidates are ranked by $U_{\mathrm{eff}}$ (equivalently $S_i$). Table~\ref{tab:p2_utility_components} reports the top components $(U_{\mathrm{perf}},U_{\mathrm{pop}},\text{Penalty})$, and Fig.~\ref{fig:p2_utility_decomposition} visualizes how the selected roster’s utility splits into returns versus policy-induced penalties under $(\alpha,\lambda)=(0.65,0.6)$.
+	
+	\newcommand{\ImgShift}{0mm}
+	\begin{figure}[!htbp]
+		\centering
+		\begin{minipage}[t]{0.55\linewidth}
+			\centering
+			\vspace{0pt}
+			\raisebox{\ImgShift}{%
+				\includegraphics[width=\linewidth]{figures/Model2 Utility Decomposition (Selected Roster).png}%
+			}
+			\vspace{-1em}
+			\captionof{figure}{Utility decomposition of the selected roster under Model II ($\alpha=0.65$, $\lambda=0.6$).}
+			\label{fig:p2_utility_decomposition}
+		\end{minipage}
+		\hfill
+		\begin{minipage}[t]{0.42\linewidth}
+			\centering
+			\vspace{0pt}
+			\resizebox{\linewidth}{!}{%
+				\begin{tabular}{lrrrr}
+					\toprule
+					Player & $U_{\mathrm{perf}}$ & $U_{\mathrm{pop}}$ & Penalty & $U_{\mathrm{eff}}$ \\
+					\midrule
+					A'ja Wilson        & 0.650 & 0.010 & 0.120 & 0.540 \\
+					Astou Ndour-Fall   & 0.153 & 0.350 & 0.120 & 0.383 \\
+					Chennedy Carter    & 0.399 & 0.079 & 0.120 & 0.358 \\
+					Kiana Williams     & 0.109 & 0.290 & 0.120 & 0.278 \\
+					Joyner Holmes      & 0.136 & 0.249 & 0.120 & 0.265 \\
+					Dearica Hamby      & 0.366 & 0.000 & 0.120 & 0.246 \\
+					Emma Cannon        & 0.130 & 0.218 & 0.120 & 0.228 \\
+					Kierstan Bell      & 0.111 & 0.233 & 0.120 & 0.224 \\
+					Megan Gustafson    & 0.150 & 0.146 & 0.120 & 0.176 \\
+					Sydney Colson      & 0.000 & 0.254 & 0.120 & 0.134 \\
+					\bottomrule
+				\end{tabular}
+			}
+			\vspace{0.5em}
+			\captionof{table}{Utility components of selected players (Top 10 by $U_{\mathrm{eff}}$).}
+			\label{tab:p2_utility_components}
+		\end{minipage}
+	\end{figure}
+	
+	
+	\paragraph{Implementation and sensitivity map.}
+	
+	The MILP is solved using CBC via PuLP. Beyond a single roster, the framework \emph{outputs} policy-facing diagnostics by varying $\alpha$ and the stability limit $N_{\max}$. Fig.~\ref{fig:p2_feasibility} summarizes the feasibility--objective landscape, highlighting infeasible regions under overly restrictive stability settings and a broad high-value plateau within the feasible domain.
+	
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.60\linewidth]{figures/Problem_feasibility.png}
+		\caption{Feasibility--objective landscape over $(\alpha, N_{\max})$ for Model II.}
+		\label{fig:p2_feasibility}
+	\end{figure}
+
+	The final outputs include the optimal starters/bench, position-matched starter--bench mapping, and reporting quantities for visualization (objective value, payroll totals, competitive vs.\ commercial contribution, and turnover count). These outputs support policy evaluation by adjusting $(\alpha,\lambda,N_{\max})$ without changing the optimization core.
+	
+	
+	% (Suggested figures for Section 5.3)
+	% Fig P2-4: Starter ↔ Bench position-coverage diagram/table
+	% Fig P2-3: Payroll breakdown bars (starter vs bench vs total)
+	% Fig P2-7: Sensitivity to alpha / stability constraint (optional)
+	
+	\subsection{Final Roster Implications and Transition to Expansion Strategy}
+	
+	\subsubsection{Roster structure and return allocation.}
+	Model II should be read as a \emph{policy-consistent portfolio outcome}, not a purely performance-maximizing lineup. Under the fixed mix and one-to-one starter--bench coverage, the MILP \emph{selects} high-efficiency players for starting roles and assigns cost-efficient, role-flexible options to the bench, producing a rotation-feasible configuration that balances immediate impact with depth.
+	
+	\subsubsection{Economic rationale and implementability.}
+	The decision is driven by the net score $S_i$, which \emph{aggregates} competitive efficiency, commercial value, availability risk, and acquisition/stability frictions. Consistent with the return--cost diagnostic, high-salary players are retained only when their marginal score justifies the price, while excessive turnover is \emph{discouraged} by transaction fees and stability penalties. The feasibility--objective map over $(\alpha, N_{\max})$ further \emph{validates} that the selected roster lies in a broad high-value feasible region, indicating that the recommendation is implementable and not dependent on fragile parameter tuning.
+	
+	\subsubsection{Strategic implications and link to expansion draft.}
+	Beyond the roster itself, Model II \emph{outputs} auditable player-level quantities (e.g., $U_{\mathrm{eff}}$ and its decomposition into $U_{\mathrm{perf}}$, $U_{\mathrm{pop}}$, and penalties). These metrics operationalize \emph{replaceability}: players with high effective utility and scarce substitutes become protection priorities, whereas lower-$U_{\mathrm{eff}}$ players with close alternatives can be exposed at limited downside. This translation from roster optimization to protection value provides the input layer for Problem~3, where expansion-draft uncertainty is handled via regret-based protection decisions.
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% 6 Model III
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Expansion Draft Shield}
+	
+	
+	\subsection{Cross-Model Synthesis: From Valuation Control to Roster Decisions}
+	\label{subsec:cross_model_synthesis}
+	\vspace{-1em}
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.8\linewidth]{figures/Problem3.png}
+		\caption{Cross-model pipeline}
+		\label{fig:combined_diagram}
+	\end{figure}
+	
+	Section~6 couples Model~I (Chapter~4) and Model~II (Chapter~5) as the pipeline in
+	Figure~\ref{fig:combined_diagram}, so roster choices are judged by valuation
+	impacts under shocks. Model~II \emph{solves} a utility-based MILP to \emph{output}
+	a feasible 10-player roster and a performance--market interface:
+	$\Delta W$ (win shift), $\Delta P$ (brand shift), and risk/volatility signals.
+	These outputs parameterize Model~I, which \emph{maps} investment, pricing, and
+	leverage controls into cash-flow dynamics, risk exposure, and $V(t)$. With injury
+	and expansion-cycle scenarios, the coupled system \emph{simulates} valuation
+	paths, \emph{ranks} strategies on a risk--return basis, and \emph{reports} roster
+	robustness/exposure metrics for later recommendations.
+	
+	
+	
+
+	% ===============================
+	% 6.2 Scenario Design: Policy Levers and Shock Assumptions
+	% ===============================
+
+	\subsection{Scenario Design: Policy Levers and Shock Assumptions}
+	To stress-test the integrated pipeline, Section~6 defines a structured scenario
+	grid that combines controllable policy levers with exogenous shocks:
+	\begin{itemize}
+		\item \textbf{Policy levers (managerial):} competition--commerce emphasis,
+		roster-stability preference, and financial aggressiveness.
+		\item \textbf{Shocks (exogenous):} higher injury risk, weaker demand, and slower
+		revenue growth.
+	\end{itemize}
+	Each scenario is a fixed lever--shock pairing. Comparing outputs across the grid
+	\emph{validates} whether strategy rankings remain stable under adverse conditions
+	and supports risk-aware recommendations in later sections.
+	
+	\subsection{Stress-Test Results: Valuation, Cash Flow, and Risk Profile}
+	Using the lever--shock grid in Section~6.2, the coupled system is simulated
+	across baseline, demand, and injury scenarios to \emph{output} valuation paths
+	and cash-flow profiles (Figures~\ref{fig:valuation_stress}--\ref{fig:cashflow_structure}).
+	
+	\paragraph{Valuation dynamics.}
+	Figure~\ref{fig:valuation_stress} shows that aggressive postures reach higher
+	valuation peaks in the baseline case, but incur larger drawdowns under demand or
+	injury shocks. Stability-oriented settings produce smoother trajectories,
+	trading upside for improved downside protection---a direct proxy for risk in the
+	valuation layer.
+	
+	\begin{figure}[htbp]
+		\centering
+		\begin{minipage}[t]{0.4\linewidth}
+			\centering
+			\includegraphics[width=0.7\linewidth]{figures/Franchise valuation.png}
+			\caption{Franchise valuation trajectories}
+			\label{fig:valuation_stress}
+		\end{minipage}
+		\hfill
+		\begin{minipage}[t]{0.52\linewidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/cashflow.png}
+			\caption{Cash-flow decomposition and net cash}
+			\label{fig:cashflow_structure}
+		\end{minipage}
+	\end{figure}
+	\vspace{-1em}
+	\vspace{-1em}
+	\paragraph{Cash flow structure.}
+	Figure~\ref{fig:cashflow_structure} decomposes operating cash flow into major
+	revenue streams and cost blocks. Revenue-driven strategies amplify near-term
+	inflows but widen operating-margin volatility under stress, whereas conservative
+	settings stabilize the cost structure and preserve cash-flow resilience. Overall,the figures expose a growth--risk trade-off that motivates the frontier and sensitivity analysis in the next section.
+	
+	
+	\subsection{Frontier and Sensitivity Analysis}
+	
+	Beyond discrete scenarios, this section examines the continuous trade-offs
+	embedded in management decisions.
+	By jointly varying key strategic and financial parameters, we construct a
+	strategy frontier that characterizes how long-term valuation responds to
+	different policy choices.
+	
+	\begin{figure}[!htbp]
+		\centering
+		
+		% ---------- 左侧：图片 + caption ----------
+		\begin{minipage}[t]{0.42\linewidth}
+			\centering
+			\vspace{0pt}
+			\includegraphics[width=0.7\linewidth]{figures/valuation_surface2.png}
+			
+			\vspace{0.4em}
+			\captionof{figure}{Valuation Surface}
+			\label{fig:valuation_surface2}
+		\end{minipage}
+		\hfill
+		% ---------- 右侧：正文解释 ----------
+		\begin{minipage}[t]{0.52\linewidth}
+			\vspace{0.5pt}
+			\small
+			The description of the left 3D surface figure:The valuation surface reveals regions of high sensitivity, where small parameter changes lead to sharp valuation responses, and flatter regions associated with more stable outcomes. Peak regions offer higher expected valuation but exhibit greater exposure to shocks, while interior regions provide improved robustness, highlighting a trade-off between aggressive value maximization and long-term strategic stability.
+		\end{minipage}
+	\end{figure}
+	\vspace{-1em}
+	Overall, the frontier provides a decision map rather than a single optimum,
+	helping management balance upside potential against long-term stability.
+	
+	\subsection{Strategic Recommendations: Actionable Playbook}
+	Grounded in Model~I valuation control (Chapter~4), Model~II roster optimization
+	and expansion analysis (Chapter~5), and the Section~6 stress-test/frontier
+	diagnostics, this subsection \emph{outputs} an actionable playbook for the Las Vegas Aces under the ongoing WNBA expansion cycle:
+	\begin{itemize}
+		\item \textbf{Protect the core; manage exposure.}
+		Prioritize high-utility, low-regret players for continuity, while leaving
+		replaceable assets minimally protected to preserve optionality.
+		\item \textbf{Pursue growth within stable regions.}
+		Move toward higher-valuation settings only when the valuation surface remains
+		locally flat; avoid highly sensitive zones where small policy shifts induce
+		large downside under shocks.
+		\item \textbf{Maintain financial and roster flexibility.}
+		Keep liquidity and cap headroom to absorb injury, demand, and expansion shocks
+		without forcing value-destructive roster moves.
+	\end{itemize}
+	Overall, the recommendations convert scenario-based outcomes and local
+	risk--return gradients into owner-ready decisions for the expansion window.
+	
+	\paragraph{Extension roadmap.}
+	Future work can incorporate stochastic injury dynamics, richer demand-side
+	features, and endogenous league-expansion responses; extending to multi-team or
+	equilibrium settings would improve scalability without altering the current
+	decision logic.
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% 7 Model Application
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Commercial Levers and Resilience Management}
+	
+	
+	\subsection{Chapter Overview and Link to the Core Models} 
+	
+	The flowing figure 7-1 summarizes Chapter~7 execution supporting Q4--Q5 for the LV Aces. 
+	The core contains a roster-to-performance simulator (lineup $\rightarrow$ strength/availability) and a DCF engine (cash flow + financing $\rightarrow$ valuation). 
+	Module~B forecasts demand via XGBoost and selects a three-tier price path maximizing Revenue+CLV. 
+	Module~A detects injury shocks from health signals, triggers the B-plan, and applies an injury risk premium. 
+	Outputs feed the Chapter~6 stress-test dashboard (cash flow, VaR, valuation drawdown).
+	
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.9\linewidth]{figures/Chapter7.png}
+		\caption{Core model details}
+		\label{Core model details}
+	\end{figure}
+	\vspace{-1em}
+	
+	\subsection{Dynamic Ticket Pricing as a Commercial Control Lever} 
+	
+	\subsubsection{Objective and Decision Variables}
+	This module treats game-level ticket pricing as a commercial control lever. 
+	For each game $g$, the policy selects $p_g$ to maximize \emph{Revenue + CLV}, so that short-run monetization does not crowd out repeat attendance or season-ticket conversion. 
+	The decision variable $p_g$ can be implemented as a single posted price or a three-tier ladder (Early/Normal/Premium). 
+	Operational constraints cap inter-game price swings (fairness), enforce $\underline p \le p_g \le \overline p$, respect capacity, and reserve season-ticket allocations.
+	
+	\subsubsection{Pricing Mechanism: Demand Forecast $\rightarrow$ Revenue+CLV Optimization}
+	\paragraph{Demand modeling (outputs a price-conditional forecast).}
+	Demand is modeled as a nonlinear function of context and price:
+	\[
+	\text{Demand}_g = f(\text{Opponent}, \text{DoW}, \text{Weather}, \text{PlayoffRace}, p_g, \ldots).
+	\]
+	An XGBoost forecaster outputs $\widehat{\text{Demand}}_g(p_g)$, capturing interactions across heterogeneous game conditions; the resulting forecast is the direct input to optimization.
+	
+	\paragraph{Optimization (outputs an optimal price path).}
+	For each game,
+	\[
+	R_g(p_g) = p_g \cdot \widehat{\text{Demand}}_g(p_g).
+	\]
+	To account for fan-asset accumulation, the objective adds the incremental CLV effect induced by pricing:
+	\[
+	\max_{p_g}\; R_g(p_g) + \eta_{\mathrm{CLV}}\cdot \Delta \text{CLV}_g(p_g),
+	\]
+	where $\eta_{\mathrm{CLV}}$ encodes the preference for long-term value relative to immediate revenue.
+	
+	\begin{figure}[!htbp]
+		\centering
+		\begin{subfigure}{0.32\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/Optimal_Ticket_Price_Trajectory.png}
+			\caption{Optimal ticket price trajectory}
+			\label{fig:dtp_price_path}
+		\end{subfigure}\hfill
+		\begin{subfigure}{0.32\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/Revenue-Attendance_Trade-off.png}
+			\caption{Revenue--attendance trade-off}
+			\label{fig:dtp_tradeoff}
+		\end{subfigure}\hfill
+		\begin{subfigure}{0.32\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{figures/SHAP_Summary(DemandModel).jpg}
+			\caption{SHAP summary}
+			\label{fig:dtp_shap}
+		\end{subfigure}
+		\caption{Outputs and validation of the dynamic ticket pricing model.}
+		\label{fig:dtp_outputs}
+	\end{figure}
+	
+	\subsubsection{Outputs and Validation}
+	Figure~\ref{fig:dtp_outputs} reports three diagnostics and the operational outputs behind them. 
+	Figure~\ref{fig:dtp_price_path} outputs the season-long optimal price trajectory, showing discrete tier switches across heterogeneous opponents and game importance. 
+	Figure~\ref{fig:dtp_tradeoff} outputs the revenue--attendance trade-off and exhibits an interior revenue maximum at the selected price, validating that the optimizer does not default to boundary pricing. 
+	Figure~\ref{fig:dtp_shap} validates interpretability by attributing demand variation to key drivers (game importance, opponent strength, and price), with secondary effects from calendar and weather signals.
+	
+	
+	\subsection{Injury Response and Organizational Resilience}
+	
+	\subsubsection{Objective and Shock Definition}
+	
+	\paragraph{Objective.}
+	This section addresses organizational resilience to player-availability shocks. 
+	When a core-player injury occurs, the system automatically activates a contingency (B-plan) that limits joint competitive and financial losses while controlling downside risk.
+	\vspace{-0.5pt}
+	
+	\paragraph{Shock Definition.}
+	A shock is defined as the unavailability of a core player, characterized by injury probability, severity, and expected absence duration. 
+	Such events propagate through reduced win probability, weaker game-day and sponsorship revenues, and higher short-term replacement or financing costs, thereby affecting cash flows and franchise valuation.
+	
+	\subsubsection{Risk Premium and Shadow Loss}
+	
+	\paragraph{Injury Risk Premium.}
+	Injury-related uncertainty is represented by an explicit risk premium. 
+	Injury-prone players receive higher effective discount rates (or lower expected net values) in contract and acquisition evaluations, reflecting greater downside exposure.
+	\vspace{-0.5pt}
+	
+	\paragraph{Shadow Win Loss.}
+	Shadow win loss measures the reduction in expected wins or playoff probability attributable to a core-player absence. 
+	This competitive deficit is translated into financial terms via its impact on projected cash flows and valuation drawdowns, ensuring consistency with the stress-testing framework.
+	
+	\subsubsection{Adaptive Policy: Financing and Roster Contingency}
+	
+	Based on the quantified injury shock, risk premium, and shadow win loss, an adaptive policy set coordinates roster actions with financial responses. 
+	The objective is to cap valuation drawdowns while preserving long-run strategic flexibility.
+	
+	\paragraph{Policy Set.}
+	Management selects among three action classes:
+	\begin{itemize}
+		\item \textbf{Short-term reinforcement:} acquire or sign replacement players to stabilize on-court performance, at higher immediate cost.
+		\item \textbf{Financial adjustment:} choose between short-term debt financing and expenditure contraction, consistent with the capital-structure logic in Model~I.
+		\item \textbf{Strategic pullback:} under severe injuries, reduce current-season investment to preserve draft position or long-term value.
+	\end{itemize}
+	
+	\paragraph{Plan-B Trigger Rule.}
+	The contingency (B-plan) is activated when both injury severity and valuation risk exceed predefined thresholds. 
+	The resulting decision rule is summarized in Table~\ref{tab:bplan_policy}.
+	
+	\begin{center}
+		\small
+		\setlength{\tabcolsep}{4pt}
+		\renewcommand{\arraystretch}{1.05}
+		\begin{tabular}{p{3cm} p{3cm} p{4.5cm}}
+			\toprule
+			\textbf{Injury Severity} & \textbf{Valuation Risk} & \textbf{Recommended Action} \\
+			\midrule
+			Low  & Low  & Maintain baseline strategy \\
+			High & Low  & Short-term roster reinforcement \\
+			Low  & High & Financial contraction or refinancing \\
+			High & High & Strategic pullback (B-plan) \\
+			\bottomrule
+		\end{tabular}
+		
+		\vspace{2pt}
+		\captionof{table}{Adaptive Plan-B Policy under Injury Shocks}
+		\label{tab:bplan_policy}
+	\end{center}
+	
+	\vspace{-1em} % ✅ 这时就真的有效了
+	
+	\paragraph{Outputs.}
+	Each policy choice outputs projected changes in operating cash flow, valuation drawdown, and risk metrics (e.g., downside risk), which are evaluated within the Chapter~6 stress-testing framework.
+	
+	\subsubsection{Visualization}
+	Four compact diagnostics verify the adaptive injury-response policy by linking
+	\emph{injury severity}, \emph{triggered actions}, and \emph{financial outcomes}.
+	
+	% ===================== Compact 2x2 figure block =====================
+	% Requires: \usepackage{graphicx,subcaption}
+	\begin{figure}[!t]
+		\centering
+		\setlength{\tabcolsep}{2pt}
+		\renewcommand{\arraystretch}{0}
+		\begin{tabular}{@{}c c@{}}
+			\begin{subfigure}[t]{0.47\linewidth}
+				\centering
+				\includegraphics[width=\linewidth]{figures/Policy Heatmap.png}
+				\caption{Policy heatmap: severity $\times$ valuation risk.}
+				\label{fig:policy_heatmap}
+			\end{subfigure}
+			&
+			\begin{subfigure}[t]{0.47\linewidth}
+				\centering
+				\includegraphics[width=\linewidth]{figures/B-plan Trigger Dashboard.png}
+				\caption{Trigger dashboard and activation rate.}
+				\label{fig:trigger_dashboard}
+			\end{subfigure}
+			\\
+			\begin{subfigure}[t]{0.47\linewidth}
+				\centering
+				\includegraphics[width=\linewidth]{figures/Valuation Trajectory under Injury Scenarios.png}
+				\caption{Valuation trajectories (median band).}
+				\label{fig:val_traj_injury}
+			\end{subfigure}
+			&
+			\begin{subfigure}[t]{0.47\linewidth}
+				\centering
+				\includegraphics[width=\linewidth]{figures/Cash-flow Proxy (Ticket Revenue)Trajectory.png}
+				\caption{Cash-flow proxy trajectories (median band).}
+				\label{fig:cash_traj_injury}
+			\end{subfigure}
+		\end{tabular}
+		\vspace{-2mm}
+		\caption{Adaptive injury-response diagnostics}
+		\vspace{-2mm}
+	\end{figure}
+	
+	\paragraph{Policy map.}
+	Figure~\ref{fig:policy_heatmap} partitions the $(\text{SeverityIndex},\ \text{ValuationDropPct})$ space into four recommended actions. 
+	Thresholds $(\text{sev}^*,\text{risk}^*)$ define escalation boundaries, yielding an interpretable and auditable decision rule.
+	
+	\paragraph{Trigger logic.}
+	Figure~\ref{fig:trigger_dashboard} overlays simulated system states with the same thresholds and highlights the B-plan activation region. 
+	The trigger rate reports how often contingency actions are invoked under stochastic injury realizations.
+	
+	\paragraph{Outcome response.}
+	Figures~\ref{fig:val_traj_injury}--\ref{fig:cash_traj_injury} compare baseline, injury-only, and injury + B-plan paths. 
+	The B-plan reduces downside drift and narrows uncertainty bands, indicating improved tail-risk control.
+	
+	\paragraph{Threshold calibration.}
+	$(\text{sev}^*,\text{risk}^*)$ are calibrated using robust quantiles under a fixed risk budget (bounding expected drawdown), and the final pair is selected to minimize out-of-sample regret across scenarios.
+	
+	
+	%======================================================== 
+	% 7.4 Integrated Insights: Why These Two Levers Matter Together
+	%========================================================
+	\subsection{Integrated Insights: Why These Two Levers Matter Together}
+	
+	Chapter~7 couples two executable levers---dynamic ticket pricing (Revenue+CLV) and trigger-based injury response---through three shared channels:
+	
+	\begin{itemize}
+		\item \textbf{Performance $\rightarrow$ demand.}
+		Expected team quality and star availability enter the demand forecast; injury shocks shift the demand curve downward and amplify revenue volatility if pricing remains aggressive.
+		
+		\item \textbf{Injury actions $\rightarrow$ cash-flow risk.}
+		Replacement spending and short-term financing change liquidity and downside exposure, which propagate to risk-adjusted valuation in the Chapter~6 dashboard.
+		
+		\item \textbf{Fan equity as a buffer.}
+		CLV-oriented pricing raises the demand floor via retention and conversion, partially smoothing shock-driven fluctuations.
+	\end{itemize}
+	
+	Therefore, pricing and injury management are screened jointly: the pricing path and B-plan actions are evaluated on the same cash-flow, VaR, and drawdown metrics to prioritize long-run franchise value over single-game profit.
+	
+	% =======================================================
+	% 7.5 Strategic Recommendations and Implementation Checklist
+	% =======================================================
+	\subsection{Strategic Recommendations and Implementation Checklist}
+	
+	Model outputs are deployed as a small set of auditable rules:
+	
+	\begin{itemize}
+		\item \textbf{Demand-tiered pricing with bounded moves.}
+		Classify games into low/normal/high-demand tiers and update within fairness bounds; high-demand games emphasize revenue, while low-demand games emphasize CLV acquisition.
+		
+		\item \textbf{Trigger-based injury escalation.}
+		Activate reinforcement or financing only when expected value preserved exceeds the risk-adjusted cost, consistent with the $(\mathrm{sev}^*,\mathrm{risk}^*)$ trigger rule.
+		
+		\item \textbf{Pre-committed B-plan execution.}
+		Maintain a predefined rotation and roster contingency to reduce reaction delay and avoid liquidity stress during shocks.
+		
+		\item \textbf{Operational monitoring.}
+		Track demand-forecast error, revenue deviation from plan, conversion proxies (repeat attendance / season-ticket uptake), and B-plan activation frequency.
+	\end{itemize}
+	
+	% ============================================================
+	% 7.6 Chapter Closing: Hand-off to the Letter to Owner
+	% ============================================================
+	\subsection{Chapter Closing: Hand-off to the Letter to Owner}
+	
+	Chapter~7 closes the execution loop by turning two model outputs into a manager-ready rulebook:
+	
+	\begin{itemize}
+		\item \textbf{Commercial control delivered.}
+		Dynamic ticket pricing solves a per-game Revenue+CLV objective, balancing match-day revenue with fan-equity accumulation.
+		
+		\item \textbf{Uncertainty made actionable.}
+		Injury risk is priced and mapped into a trigger-based B-plan that selects roster/financing actions under severity--risk states.
+		
+		\item \textbf{Robustness under the WNBA expansion cycle.}
+		Joint screening on cash flow, VaR, and valuation drawdown preserves upside while capping downside in a more volatile competitive environment.
+	\end{itemize}
+	
+	The following Letter to Owner distills these results into executive guidance---what to do, when to trigger, and which indicators to monitor as residual risks evolve.
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% 8 Sensitivity Analysis
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Sensitivity Analysis}
+	
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.6\linewidth]{figures/Sensitivity_Analysis.png}
+		\caption{Core model details}
+		\label{Core model details}
+	\end{figure}
+
+	To verify robustness across the coupled finance--roster--demand stack, a grid-based sensitivity experiment perturbs three parameter pairs: (i) discount rate $r$ and horizon $T$ in Model~I, (ii) utility weight $\alpha$ and risk aversion $\lambda$ in Model~II, and (iii) demand elasticity $\varepsilon$ and injury probability $q$ in the Chapter~6 pricing--injury module. The following figure summarizes the outputs. Panels (a--b) show that valuation declines monotonically with $r$ and increases with $T$, with the aggressive policy retaining a higher level across the grid, indicating that the choice of capital cost is the dominant driver of long-run DCF. Panel (c) confirms that $\alpha$ primarily shifts the utility frontier while $\lambda$ controls robustness, leading to discrete roster switches only in a narrow mid-range. Panel (d) shows profit improves as demand becomes less elastic and injuries are rarer; the policy overlay identifies the region where the B-plan is triggered to preserve retention.
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% 9 Model Evaluation
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section{Model Evaluation}
+	
+	\subsection{Strengths}
+	\begin{itemize}\setlength\itemsep{0.2em}
+		\item \textbf{Integrated sport--finance logic:} the framework maps roster quality and injury risk into demand, cash flows, and discounted valuation, so recommendations are economically grounded rather than purely performance-driven.
+		\item \textbf{Dynamic, decision-oriented output:} the continuous-time control design yields interpretable policies (when to invest, deleverage, or preserve liquidity) instead of black-box scores, supporting in-season adjustments.
+		\item \textbf{Robust and stress-testable:} strategy rankings are stable under moderate perturbations of secondary inputs; sensitivity analysis isolates a small Tier-1 set (demand elasticity, star effect, injury risk, financing cost, rule shocks), enabling trigger-based management and scenario comparison.
+	\end{itemize}
+	
+	\subsection{Weaknesses}
+	\begin{itemize}\setlength\itemsep{0.2em}
+		\item Some commercial variables are partially unobservable, so proxy calibration may affect \emph{absolute} valuation levels.
+		\item Structural simplifications (e.g., fixed operating cost; omitted discrete venue decisions) may understate tail risks in extreme expansion regimes.
+	\end{itemize}
+		
+	\section{Conclusion}
+
+	This study develops an executable decision-support framework for a WNBA franchise in the expansion era, focusing on the Las Vegas Aces. Operational levers map to valuation via free-cash-flow DCF plus a terminal EV/Revenue multiple, enabling ROI-aware comparisons across policies.
+	
+
+	To begin with, Model I treats payroll, ticket pricing, and leverage as continuous-time controls that co-evolve competitiveness, fan equity, liquidity, and debt; valuation surfaces and sensitivity heatmaps separate stable regions from leverage-fragile zones for risk budgeting. Second, Model II selects a rotation-feasible 10-player roster under a hard salary cap, enforcing starter--bench coverage and availability-risk discounts; trade-offs follow $(\alpha,\lambda)$ and preserve brand-relevant star impact. Moreover, a minimax-regret six-player protection rule hedges expansion uncertainty while maintaining roster optionality.
+	
+
+	Finally, XGBoost demand forecasts support Revenue+CLV pricing with SHAP attribution, and an injury-triggered B-plan limits drawdowns in stress tests. Thus, the pipeline converts the win--profit tension into auditable rules and compact visuals for game-by-game execution.
+
+	
+	
+
+	
+	
+	
+	
+	% 参考文献
+	\printbibliography
+	% =========================
+	% References (copy-paste, no .bib needed)
+	% Compile with: pdflatex -> pdflatex
+	% =========================
+	\begin{thebibliography}{99}
+		
+		\bibitem{bellman1952dynamic}
+		R.~Bellman,
+		``On the Theory of Dynamic Programming,''
+		\emph{Proceedings of the National Academy of Sciences},
+		vol.~38, no.~8, pp.~716--719, 1952.
+		doi:10.1073/pnas.38.8.716.
+		
+		\bibitem{merton1971continuous}
+		R.~C.~Merton,
+		``Optimum Consumption and Portfolio Rules in a Continuous-Time Model,''
+		\emph{Journal of Economic Theory},
+		vol.~3, no.~4, pp.~373--413, 1971.
+		doi:10.1016/0022-0531(71)90038-X.
+		
+		\bibitem{bental1998robust}
+		A.~Ben-Tal and A.~Nemirovski,
+		``Robust Convex Optimization,''
+		\emph{Mathematics of Operations Research},
+		vol.~23, no.~4, pp.~769--805, 1998.
+		doi:10.1287/moor.23.4.769.
+		
+		\bibitem{gomory1958integer}
+		R.~E.~Gomory,
+		``Outline of an Algorithm for Integer Solutions to Linear Programs,''
+		\emph{Bulletin of the American Mathematical Society},
+		vol.~64, no.~5, pp.~275--278, 1958.
+		doi:10.1090/S0002-9904-1958-10224-4.
+		
+		\bibitem{savage1951decision}
+		L.~J.~Savage,
+		``The Theory of Statistical Decision,''
+		\emph{Journal of the American Statistical Association},
+		vol.~46, no.~253, pp.~55--67, 1951.
+		doi:10.1080/01621459.1951.10500768.
+		
+		\bibitem{loomes1982regret}
+		G.~Loomes and R.~Sugden,
+		``Regret Theory: An Alternative Theory of Rational Choice Under Uncertainty,''
+		\emph{The Economic Journal},
+		vol.~92, no.~368, pp.~805--824, 1982.
+		doi:10.2307/2232669.
+		
+		\bibitem{gallego1994pricing}
+		G.~Gallego and G.~van~Ryzin,
+		``Optimal Dynamic Pricing of Inventories with Stochastic Demand over Finite Horizons,''
+		\emph{Management Science},
+		vol.~40, no.~8, pp.~999--1020, 1994.
+		doi:10.1287/mnsc.40.8.999.
+		
+		\bibitem{chen2016xgboost}
+		T.~Chen and C.~Guestrin,
+		``XGBoost: A Scalable Tree Boosting System,''
+		in \emph{Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD'16)},
+		pp.~785--794, 2016.
+		doi:10.1145/2939672.2939785.
+		
+		\bibitem{lundberg2017shap}
+		S.~M.~Lundberg and S.-I.~Lee,
+		``A Unified Approach to Interpreting Model Predictions,''
+		in \emph{Advances in Neural Information Processing Systems 30 (NeurIPS 2017)},
+		pp.~4765--4774, 2017.
+		
+		\bibitem{fader2005clv}
+		P.~S.~Fader, B.~G.~S.~Hardie, and K.~L.~Lee,
+		``Counting Your Customers the Easy Way: An Alternative to the Pareto/NBD Model,''
+		\emph{Marketing Science},
+		vol.~24, no.~2, pp.~275--284, 2005.
+		doi:10.1287/mksc.1040.0098.
+		
+	\end{thebibliography}
+	
+	
+% =========================
+% Letter to Owner (<=300 words, NOT in ToC)
+% =========================
+\clearpage
+\phantomsection
+\section*{Letter to the Owner and General Manager (Las Vegas Aces)}
+\thispagestyle{plain}
+
+\vspace*{-0.9cm}
+\noindent\includegraphics[width=\linewidth]{figures/letter_fig.jpg}
+
+\vspace{0.55em}\hrule\vspace{0.9em}
+
+\noindent\textbf{To:} Owner and General Manager, Las Vegas Aces\\
+\textbf{From:} Team \#2622388\\
+\textbf{Date:} \today\\
+\textbf{Subject:} Valuation-First Strategy for the Expansion Cycle and Injury Risk
+
+\vspace{0.6em}
+Dear Owner and General Manager,
+
+This letter summarizes a valuation-first operating plan for the coming season and the WNBA expansion cycle. The objective is to maximize long-run franchise value using a cash-flow-based DCF (with an EV/Revenue terminal anchor), while keeping downside risk bounded under salary-cap and roster constraints.
+
+\noindent\textbf{1) Financial control (primary lever).}
+Operate near the ``stable ridge'' of the valuation surface: increase payroll intensity and revenue levers only when the marginal value gain remains positive under adverse scenarios, and avoid high-leverage regions where small shocks produce large valuation drawdowns. In practice, treat the salary cap as a hard constraint and maintain a 10-player roster (5 starters + 5 bench) to preserve depth without compromising liquidity. Re-optimize at fixed checkpoints (e.g., monthly or schedule breaks) using updated cash-flow and performance indicators.
+
+\noindent\textbf{2) Expansion protection (minimax regret).}
+Under the protect-6 rule, choose the protection list that minimizes worst-case regret in franchise value, prioritizing players with high remaining value net of contract burden and strong lineup coverage. The deliverable is operational: an optimal protection list, the most likely exposed player to be selected, and the capped maximum regret, enabling quick front-office decisions.
+
+\noindent\textbf{3) Injury resilience (triggered B-plan).}
+Adopt a pre-committed contingency policy. When injury severity and expected absence cross calibrated thresholds (minimax-regret/risk-budget logic), activate role reallocation first, then bounded short-term acquisitions only if conservative value preservation exceeds incremental cost.
+
+\vspace{2em}
+\noindent\makebox[\linewidth][r]{Sincerely,}\\
+\noindent\makebox[\linewidth][r]{Team \#2622388}
+
+
+
+
+	
+	
+
+	
+	% =====================  One-page AI Tool Usage (MCM/ICM compliant)  =====================
+	\clearpage
+	\section*{Report on the Use of AI Tools}
+	\small
+	
+	\subsection*{I. Developer Information (Company / Year / Tool / Version)}
+	\begin{itemize}
+		\item OpenAI (2026), ChatGPT (GPT-5.2 Thinking).
+	\end{itemize}
+	
+	\subsection*{II. Scope, Application Positions and Methods}
+	\begin{enumerate}
+		\item \textbf{Writing Assistance and Text Refinement}\\
+		\textbf{Position of Application:} Section descriptions, figure captions and transitional sentences in Chapter 4--7.\\
+		\textbf{Method of Application:} Generating editable LaTeX drafts; the team then conducted fact-checking, symbol correction and semantic condensation, with the final text subject to the team's revised version.
+		
+		\item \textbf{Data Analysis, Visualization and Code Debugging}\\
+		\textbf{Position of Application:} Sensitivity and frontier analysis plots (e.g., Ch. 4.4--4.5, Ch. 6.4), visualizations for ticket demand and CLV (Customer Lifetime Value) (Ch. 7.2), heatmaps and trigger dashboards for injury strategy (Ch. 7.3--7.4).\\
+		\textbf{Method of Application:} Generating/modifying partial Python plotting and analysis scripts; all scripts were locally executed to reproduce the final figures, and key intermediate values were documented as tables/CSVs for citation in the paper.
+		
+		\item \textbf{Formatting and Consistency Check}\\
+		\textbf{Position of Application:} Nomenclature, side-by-side layout of figures and tables (minipage/subfigure), cross-referencing and consistency check of numbering.\\
+		\textbf{Method of Application:} Generating LaTeX snippets in accordance with the paper template constraints; the team manually verified the compilation effect and page layout occupation.
+	\end{enumerate}
+	
+	\subsection*{III. Representative Prompts (Abbreviated)}
+	\begin{itemize}
+		\item "Condense Ch. 7.3.4 to 110--140 words, avoid the first-person pronoun 'we', explain the policy heatmap and trigger dashboard, and supplement the calibration criterion for thresholds (Quantile/Minimax Regret)."
+		\item "Generate runnable Python code for Fig. 7.5: avoid label overlap, achieve publication-level visualization, and specify the output file names and save paths."
+	\end{itemize}
+	
+	\subsection*{IV. Human Verification Statement}
+	AI was only used for writing assistance, code/visualization support, and formatting consistency check. All model specifications, parameter selections, data processing, numerical results and final conclusions were independently reviewed and verified by the team. The results of reproducible experiments in the paper are based on the output of the team's custom scripts.
+	
+	\normalsize
+	
+	
+\end{document}
